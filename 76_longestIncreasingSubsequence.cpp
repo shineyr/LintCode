@@ -56,11 +56,52 @@ public:
             dp[i] = 1;
             for(int j=0; j<i; ++j)
             {
-                if(nums[i] >= nums[j])
+                if(nums[i] >= nums[j]) //如果要求不可含重复元素，则去掉等号
                 {
                     dp[i] = max(dp[i], dp[j] + 1);
                 }//if
             }//for
+        }//for
+        
+        return dp;
+    }
+    
+    //O(nlogn)的复杂度（针对不含重复元素的最长递增子序列）
+    vector<int> getDp2(vector<int> &nums)
+    {
+         if(nums.empty())
+        {
+            return vector<int>();
+        }//if
+        
+        int len = nums.size();
+        vector<int> dp(len, 0), ends(len,0);
+        dp[0] = 1;
+        ends[0] = nums[0];
+        
+        int right = 0;
+        
+        int l = 0, r = 0, m = 0;
+        for(int i=1; i<len; ++i)
+        {
+            l = 0;
+            r = right;
+            /*采用二分的思想，降低复杂度*/
+            while(l <= r)
+            {
+                m = (l + r)/2;
+                if(nums[i] < ends[m])
+                {
+                    l = m + 1;
+                }//if
+                else {
+                    r = m - 1;
+                }//else
+            }//while
+            
+            right = max(right , l);
+            ends[l] = nums[i];
+            dp[i] = l + 1;
         }//for
         
         return dp;
