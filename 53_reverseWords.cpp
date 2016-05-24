@@ -32,16 +32,30 @@ public:
 			{
 				string tmp = s.substr(beg, i - beg);
 				reverse(tmp.begin(), tmp.end());
-				ret = ret + tmp +" ";
-				beg = i + 1;
+				/*精确处理空格*/
+				if (ret == "")
+					ret += tmp;
+				else
+					ret = ret + " " + tmp;
+
+				//寻找下一单词的开始位置
+				while (s[i] == ' ')
+				{
+					++i;
+				}//while
+				beg = i;
 			}//if
-			
+
 		}//for
 		string tmp = s.substr(beg, i - beg);
 		reverse(tmp.begin(), tmp.end());
-		
-		ret += tmp;
 
+		/*精确处理空格*/
+		if (ret == "")
+			ret += tmp;
+		else if(tmp != "")
+			ret = ret + " " + tmp;
+        
 		reverse(ret.begin(), ret.end());
 
 		return ret;
