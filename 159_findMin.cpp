@@ -58,7 +58,7 @@ public:
         int ret = num[lhs];
         for(int i=lhs+1; i<=rhs; ++i)
         {
-            if(ret < num[i])
+            if(ret > num[i])
             {
                 ret = num[i];
             }
